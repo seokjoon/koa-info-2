@@ -17,6 +17,7 @@ Info.init({
   content: DataTypes.TEXT,
   title: {
     allowNull: false,
+    defaultValue: 'title',
     type: DataTypes.STRING,
   },
 }, {
