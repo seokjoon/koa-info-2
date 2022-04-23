@@ -1,30 +1,35 @@
-// const { Sequelize, Model, DataTypes } = require('sequelize')
-// import { Sequelize, Model, DataTypes } from 'sequelize/types/index.js'
 import { Sequelize, Model, DataTypes } from 'sequelize'
 
 
-const sequelize = new Sequelize('sqlite::memory:')
+const sequelize = new Sequelize('info2', 'root', 'secret', {
+  host: 'localhost',
+  dialect: 'mysql',
+  // logging: (...msg) => console.log(msg),
+})
 
 
-class Info extends Model {}
+class Info extends Model {
+  // otherPublicField
+}
 
 
 Info.init({
   content: DataTypes.TEXT,
-  title: DataTypes.STRING,
+  title: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
 }, {
   sequelize,
   modelName: 'info',
-})
+});
 
-(async () => {
-  await sequelize.sync()
-  const info = await Info.create({
-    content: 'world',
-    title: 'hello',
-  })
-  console.log(info.toJSON())
-})()
+
+// (async () => {
+  // await Info.sync({ force: true })
+  // console.log('table (re)created')
+// })()
+
 
 
 export default Info
