@@ -1,4 +1,5 @@
 import Info from '../model/Info.js'
+import { Op } from 'sequelize'
 
 
 const infoController = {}
@@ -15,6 +16,7 @@ infoController.create = async ctx => {
 
 
 infoController.delete = async ctx => {
+  // await Info.destroy({ where: { id: ctx.params.id } })
   let item = await Info.findOne()
   ctx.body = await item.destroy()
 }
@@ -25,16 +27,20 @@ infoController.read = async ctx => {
 }
 
 
+//Where: https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#applying-where-clauses
 infoController.reads = async ctx => {
   // const items = await Info.findAll()
-  const items = await Info.findAll({ attributes: ['id', 'title'] })
   //console.log(items.every(item => item instanceof Info), JSON.stringify(items, null, 2))
+  //const items = await Info.findAll({ attributes: ['id', 'title'] })
+  const items = await Info.findAll({ attributes: ['id', 'title'], where: { title: { [Op.like]: '%hello%' } } })
   console.log(items.every(item => item instanceof Info))
   ctx.body = items
 }
 
 
 infoController.seed = async ctx => {
+  // await Info.destroy({ truncate: true,})
+
   // await sequelize.sync({ force: true })
   // console.log('all models synced')
 
@@ -49,6 +55,7 @@ infoController.seed = async ctx => {
 
 
 infoController.update = async ctx => {
+  // await Info.update({ title: 'hello' }, { where: { title: null } })
   let item = await Info.findOne()
   ctx.body = await item.update({
     content: 'world update',
