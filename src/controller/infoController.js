@@ -7,8 +7,10 @@ const infoController = {}
 infoController.create = async ctx => {
   // const item = Info.build({ content: 'world', title: 'hello', }) //instead new Info
   // await item.save()
-  let item = await Info.create({ content: 'world', title: 'hello', })
+  // let item = await Info.create({ content: 'world', title: 'hello', })
+  let item = await Info.create(ctx.request.body, { fields: ['content', 'title'] })
   console.log(item instanceof Info, item.toJSON())
+  ctx.body = item
 }
 
 
@@ -19,19 +21,16 @@ infoController.delete = async ctx => {
 
 
 infoController.read = async ctx => {
-  try {
-    const item = await Info.findOne()
-    ctx.body = {
-      item: item.toJSON(),
-    }
-  } catch (e) {
-    console.log(e)
-  }
+  ctx.body = await Info.findOne()
 }
 
 
 infoController.reads = async ctx => {
-
+  // const items = await Info.findAll()
+  const items = await Info.findAll({ attributes: ['id', 'title'] })
+  //console.log(items.every(item => item instanceof Info), JSON.stringify(items, null, 2))
+  console.log(items.every(item => item instanceof Info))
+  ctx.body = items
 }
 
 
