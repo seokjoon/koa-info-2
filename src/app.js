@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import bodyParser from 'koa-bodyparser'
 // import jwtMiddleware from './middleware/jwtMiddleware.js'
 import cors from '@koa/cors'
+import { Sequelize, Model, DataTypes } from 'sequelize'
 
 
 const __dirname = path.resolve()
@@ -33,6 +34,14 @@ app.listen((port), () => {
 // }, (err) => {
 //   (err) ? console.log('Error connecting to MongoDB: ', err) : console.log('Connected to MongoDB')
 // })
+
+
+const sequelize = new Sequelize('info2', 'root', 'secret', { host: 'localhost', dialect: 'mysql', })
+// try {
+//   await sequelize.authenticate()
+//   console.log('Connection has been established successfully.')
+//   await sequelize.close()
+// } catch (e) { console.log(e) }
 
 
 //////// middleware BEGIN

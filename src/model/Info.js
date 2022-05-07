@@ -10,9 +10,19 @@ const sequelize = new Sequelize('info2', 'root', 'secret', {
 
 class Info extends Model {
   // otherPublicField
+
+  static bar() {
+    return 'bar'
+  }
+
+  foo() {
+    return this.title
+  }
 }
 
 
+//Data Types: https://sequelize.org/docs/v6/core-concepts/model-basics/#data-types
+//Column Options: https://sequelize.org/docs/v6/core-concepts/model-basics/#column-options
 Info.init({
   content: DataTypes.TEXT,
   title: {
